@@ -22,7 +22,7 @@
 
 <div id="visdown-input">  
   
-# Bar Plot
+# Point Plot
   
 ```vis
 width: 600
@@ -38,6 +38,214 @@ encoding:
    field: price
    type: Q
 ```
+    
+    
+```vis
+height: 400
+data:
+  url: data/notes.csv
+mark: circle
+encoding:
+  x: 
+    field: year
+    type: ordinal
+  y:
+    field: money
+    type: Q
+  color: 
+    field: value
+    type: ordinal
+  size:
+    value: 50
+```
+
+    
+# Layerd Plot
+
+```vis
+data: 
+  url: data/notes.csv
+hconcat:
+- mark: bar
+  encoding:
+    x: 
+      field: year
+      type: ordinal
+    y:
+      field: money
+      type: Q
+- mark: point
+  encoding:
+    x:
+      field: denom
+      type: ordinal
+    y:
+      field: number
+      type: Q
+    color:
+      value: red
+    opacity:
+      value: 0.3
+ 
+```
+
+    
+    
+```vis
+data: 
+  url: data/notes.csv
+mark: bar
+encoding:
+  x: 
+    field: year
+    type: ordinal
+  y:
+    aggregate: mean
+    field: number
+    stack: center
+  color:
+    field: denom
+    type: nominal
+   
+```
+
+# Filter   
+    
+```vis
+data:
+  url: data/notes.csv
+transform:
+- filter: (datum.denom == 500) || (datum.year > 2010)
+mark: line
+encoding:
+  x:
+    field: year 
+    type: N
+  y:
+    field: money
+    type: Q
+  color:
+    field: denom
+    type: N
+   
+```
+
+
+    
+```vis
+data:
+  url: data/notes.csv
+transform:
+- filter: (datum.denom != 500) && !(datum.year > 2010)
+mark: line
+encoding:
+  x:
+    field: year 
+    type: N
+  y:
+    field: money
+    type: Q
+  color:
+    field: denom
+    type: N
+   
+```
+
+    
+```vis
+width: 600
+data:
+  url: data/notes.csv
+transform:
+- filter: datum.denom == 500
+- bin: true
+  field: year
+  as: yearBin
+mark: bar
+encoding:
+  x:
+    field: yearBin
+    type: N
+  y:
+    field: money
+    type: Q
+  color:
+    field: denom
+    type: N
+   
+```
+
+    
+    
+```vis
+width: 600
+height: 400
+data:
+  url: data/notes.csv
+mark: point
+encoding:
+  x:
+    field: year
+    type: N
+  y:
+    field: money
+    aggregate: sum
+    type: Q
+    scale:
+      type: log
+```
+    
+    
+```vis
+width: 600
+height: 400
+data:
+  url: data/notes.csv
+mark: point
+encoding:
+  x:
+    field: year
+    type: N
+  y:
+    field: money
+    aggregate: count
+    type: Q
+    scale:
+      type: log
+  
+```
+
+    
+
+```vis
+width: 600
+height: 400
+data:
+  url: data/notes.csv
+transform:
+- filter: datum.money > 0
+mark: point
+encoding:
+  x:
+    field: year
+    type: N
+  y:
+    field: money
+    aggregate: count
+    type: Q
+    scale:
+      type: log
+  
+```
+ 
+    
+    
+    
+    
+    
+
+    
+    
     
 </div>
 <div id="visdown-output"></div>
